@@ -1,0 +1,20 @@
+{
+  "patch_date": "2026-11-01",
+  "source": "Pro Consensus (EMEA/Kairos)",
+  "weights": {
+    "S": 1.0,
+    "A": 0.8,
+    "B": 0.6,
+    "C": 0.4,
+    "D": 0.2,
+    "F": 0.0
+  },
+  "tiers": {
+    "MELODIE": "S",
+    "MOE": "S",
+    "BYRON": "A",
+    "ANGELO": "A",
+    "PIPER": "B",
+    "SHELLY": "C"
+  }
+}
