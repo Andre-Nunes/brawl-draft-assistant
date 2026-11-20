@@ -1,16 +1,232 @@
 {
-  "SHOOTING STAR": {
-    "BROCK": 0.62,
-    "SPIKE": 0.54,
-    "COLT": 0.51,
-    "MORTIS": 0.44,
-    "SHELLY": 0.35
+  "BELLE'S ROCK": {
+    "BROCK": 0.65,
+    "GIGI": 0.562,
+    "GRAY": 0.45,
+    "MR. P": 0.438,
+    "RICO": 0.438,
+    "PEARL": 0.438
+  },
+  "BRIDGE TOO FAR": {
+    "PIPER": 0.688,
+    "COLETTE": 0.5,
+    "COLT": 0.5
   },
   "CENTER STAGE": {
-    "RICO": 0.64,
-    "SHELLY": 0.58,
+    "GALE": 0.708,
+    "MORTIS": 0.65,
+    "SURGE": 0.65,
+    "RICO": 0.5,
+    "SQUEAK": 0.458,
+    "SPIKE": 0.438,
+    "AMBER": 0.438,
+    "CHESTER": 0.409,
+    "GUS": 0.312
+  },
+  "DOUBLE SWOOSH": {
+    "ASH": 0.722,
+    "AMBER": 0.278
+  },
+  "DRY SEASON": {
+    "8-BIT": 0.562,
+    "ANGELO": 0.562,
+    "SQUEAK": 0.562,
+    "NAJIA": 0.562,
+    "MINA": 0.562,
+    "FANG": 0.562,
+    "VINCE": 0.438,
+    "MAX": 0.438,
+    "MORTIS": 0.409,
+    "AMBER": 0.409
+  },
+  "DUELING BEETLES": {
+    "GUS": 0.562,
+    "BROCK": 0.562,
+    "MELODIE": 0.562,
+    "GRIFF": 0.562,
+    "SPIKE": 0.562,
+    "EMZ": 0.5,
+    "DYNAMIKE": 0.438,
+    "8-BIT": 0.438,
+    "BERRY": 0.438,
+    "KENJI": 0.409
+  },
+  "FLARING PHOENIX": {
+    "MELODIE": 0.722,
+    "BROCK": 0.708,
+    "ALLI": 0.562,
+    "ANGELO": 0.562,
+    "MORTIS": 0.562,
+    "PEARL": 0.562,
+    "NAJIA": 0.562,
+    "SPROUT": 0.55,
+    "TICK": 0.438,
+    "VINCE": 0.438,
+    "GRAY": 0.35,
+    "MANDY": 0.346,
+    "AMBER": 0.278
+  },
+  "GOLDARM GULCH": {
+    "AMBER": 0.562,
+    "RICO": 0.562,
+    "NAJIA": 0.562,
+    "SQUEAK": 0.438,
+    "DARRYL": 0.438,
+    "MR. P": 0.438
+  },
+  "HARD ROCK MINE": {
+    "SURGE": 0.722,
+    "SPIKE": 0.278
+  },
+  "HIDEOUT": {
+    "MORTIS": 0.722,
+    "AMBER": 0.65,
+    "HANK": 0.562,
+    "GUS": 0.5,
+    "BROCK": 0.5,
+    "MANDY": 0.45,
+    "PIPER": 0.438,
+    "OLLIE": 0.438,
+    "BYRON": 0.35
+  },
+  "HOT POTATO": {
+    "GALE": 0.688,
+    "BIBI": 0.562,
+    "BEA": 0.562,
+    "SIRIUS": 0.562,
+    "AMBER": 0.55,
+    "SHADE": 0.5,
+    "NORI": 0.5,
+    "BROCK": 0.45,
+    "MICO": 0.389,
+    "RICO": 0.35,
+    "COLETTE": 0.35,
+    "COLT": 0.312
+  },
+  "KABOOM CANYON": {
+    "8-BIT": 0.562,
+    "PIPER": 0.562,
+    "MELODIE": 0.562,
+    "COLETTE": 0.438,
+    "BROCK": 0.438,
+    "COLT": 0.438
+  },
+  "LAYER CAKE": {
+    "MORTIS": 0.562,
+    "BROCK": 0.562,
     "SPIKE": 0.55,
-    "BULL": 0.52,
-    "BROCK": 0.42
+    "GALE": 0.45,
+    "GRIFF": 0.438,
+    "TICK": 0.438
+  },
+  "NEW HORIZONS": {
+    "HANK": 0.562,
+    "NAJIA": 0.562,
+    "MELODIE": 0.562,
+    "BYRON": 0.562,
+    "RICO": 0.562,
+    "SPROUT": 0.562,
+    "MAX": 0.438,
+    "DOUG": 0.438,
+    "MR. P": 0.438,
+    "BELLE": 0.438,
+    "KAZE": 0.438,
+    "GRAY": 0.35
+  },
+  "OPEN BUSINESS": {
+    "STU": 0.562,
+    "VINCE": 0.562,
+    "GUS": 0.562,
+    "CHESTER": 0.55,
+    "SQUEAK": 0.438,
+    "COLETTE": 0.438
+  },
+  "OUT IN THE OPEN": {
+    "VINCE": 0.722,
+    "ANGELO": 0.654,
+    "GUS": 0.654,
+    "MANDY": 0.611,
+    "PIPER": 0.5,
+    "BROCK": 0.423,
+    "MAX": 0.312,
+    "BYRON": 0.278,
+    "EVE": 0.278
+  },
+  "PARALLEL PLAYS": {
+    "MR. P": 0.65,
+    "LOU": 0.625,
+    "VINCE": 0.591,
+    "BERRY": 0.577,
+    "SIRIUS": 0.562,
+    "EMZ": 0.562,
+    "MICO": 0.562,
+    "CORDELIUS": 0.562,
+    "CHESTER": 0.55,
+    "EL PRIMO": 0.55,
+    "LUMI": 0.5,
+    "RICO": 0.438,
+    "MELODIE": 0.438,
+    "MAX": 0.438,
+    "SURGE": 0.423,
+    "HANK": 0.409,
+    "WILLOW": 0.312
+  },
+  "PINBALL DREAMS": {
+    "COLT": 0.611,
+    "WENDY": 0.562,
+    "VINCE": 0.562,
+    "MR. P": 0.562,
+    "EMZ": 0.55,
+    "EL PRIMO": 0.5,
+    "MORTIS": 0.5,
+    "BIBI": 0.5,
+    "WILLOW": 0.5,
+    "BROCK": 0.438,
+    "GALE": 0.438,
+    "RICO": 0.438,
+    "EDGAR": 0.389
+  },
+  "RING OF FIRE": {
+    "OTIS": 0.591,
+    "BO": 0.562,
+    "PIERCE": 0.5,
+    "AMBER": 0.5,
+    "GALE": 0.45,
+    "STU": 0.45,
+    "SURGE": 0.438,
+    "FANG": 0.438,
+    "TARA": 0.438
+  },
+  "SAFE ZONE": {
+    "MELODIE": 0.562,
+    "SPROUT": 0.562,
+    "8-BIT": 0.45,
+    "LOU": 0.438,
+    "COLETTE": 0.438,
+    "PENNY": 0.35
+  },
+  "SHOOTING STAR": {
+    "PIERCE": 0.688,
+    "COLT": 0.562,
+    "PIPER": 0.5
+  },
+  "SNEAKY FIELDS": {
+    "RICO": 0.591,
+    "ALLI": 0.5
+  },
+  "UNDERMINE": {
+    "VINCE": 0.625,
+    "STU": 0.562,
+    "LOU": 0.562,
+    "BYRON": 0.562,
+    "AMBER": 0.55,
+    "CHESTER": 0.5,
+    "MAX": 0.5,
+    "GUS": 0.45,
+    "BO": 0.438,
+    "MR. P": 0.438,
+    "EDGAR": 0.438,
+    "STARR NOVA": 0.438,
+    "GALE": 0.433
   }
 }

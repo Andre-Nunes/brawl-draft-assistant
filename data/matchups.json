@@ -1,14 +1,578 @@
 {
   "counters": {
-    "SHELLY": ["BULL", "EL PRIMO", "MORTIS"],
-    "SPIKE": ["BULL", "EL PRIMO", "RICO"],
-    "BROCK": ["SPIKE", "JESSIE"],
-    "RICO": ["SHELLY", "NITA", "COLT"],
-    "MORTIS": ["BROCK", "COLT"]
+    "WENDY": [
+      "EDGAR",
+      "BROCK",
+      "GALE",
+      "MAX"
+    ],
+    "VINCE": [
+      "EDGAR",
+      "BROCK",
+      "SQUEAK",
+      "CHESTER",
+      "LOU",
+      "GUS",
+      "MAX",
+      "MORTIS",
+      "BERRY",
+      "HANK",
+      "RICO",
+      "MELODIE"
+    ],
+    "EL PRIMO": [
+      "EDGAR",
+      "BROCK",
+      "GALE",
+      "MR. P"
+    ],
+    "MR. P": [
+      "AMBER",
+      "MELODIE",
+      "MAX",
+      "EMZ"
+    ],
+    "RICO": [
+      "SQUEAK",
+      "CHESTER",
+      "DARRYL",
+      "AMBER",
+      "COLT",
+      "SURGE",
+      "BELLE"
+    ],
+    "GALE": [
+      "BO",
+      "MR. P",
+      "NORI",
+      "GRIFF",
+      "SURGE",
+      "EDGAR",
+      "STARR NOVA",
+      "TICK"
+    ],
+    "STU": [
+      "BO",
+      "MR. P",
+      "VINCE",
+      "CHESTER",
+      "SQUEAK",
+      "COLETTE",
+      "AMBER",
+      "PIERCE"
+    ],
+    "LOU": [
+      "BO"
+    ],
+    "PIPER": [
+      "BROCK",
+      "COLETTE"
+    ],
+    "AMBER": [
+      "GUS",
+      "DARRYL",
+      "MORTIS",
+      "PIPER",
+      "OLLIE",
+      "TARA",
+      "PIERCE"
+    ],
+    "BROCK": [
+      "AMBER",
+      "MANDY",
+      "MELODIE",
+      "TICK",
+      "GRAY",
+      "RICO",
+      "PEARL",
+      "GRIFF",
+      "KENJI",
+      "DYNAMIKE",
+      "BYRON",
+      "COLETTE",
+      "MICO",
+      "SPIKE"
+    ],
+    "ANGELO": [
+      "BROCK",
+      "VINCE",
+      "MANDY",
+      "TICK",
+      "MORTIS",
+      "AMBER"
+    ],
+    "GUS": [
+      "BYRON",
+      "MR. P",
+      "BROCK",
+      "COLETTE",
+      "KENJI",
+      "8-BIT",
+      "PIPER",
+      "EDGAR",
+      "STARR NOVA"
+    ],
+    "MAX": [
+      "BYRON",
+      "BROCK"
+    ],
+    "CHESTER": [
+      "GUS",
+      "COLT"
+    ],
+    "SQUEAK": [
+      "GUS",
+      "COLT",
+      "SURGE"
+    ],
+    "MELODIE": [
+      "AMBER",
+      "LOU",
+      "PENNY",
+      "COLETTE",
+      "GRAY",
+      "CORDELIUS",
+      "COLT",
+      "KENJI",
+      "BERRY",
+      "EMZ",
+      "MAX",
+      "DOUG"
+    ],
+    "MORTIS": [
+      "MANDY",
+      "GUS",
+      "SPIKE",
+      "GRAY",
+      "SPROUT",
+      "EMZ",
+      "RICO",
+      "EL PRIMO",
+      "GRIFF",
+      "TICK"
+    ],
+    "MANDY": [
+      "ALLI",
+      "BYRON",
+      "PIPER",
+      "OLLIE"
+    ],
+    "ALLI": [
+      "TICK",
+      "VINCE"
+    ],
+    "NAJIA": [
+      "SQUEAK",
+      "DARRYL",
+      "MR. P",
+      "MORTIS",
+      "MAX",
+      "AMBER",
+      "MANDY",
+      "SPROUT",
+      "DOUG"
+    ],
+    "8-BIT": [
+      "LOU",
+      "PENNY",
+      "COLETTE",
+      "VINCE",
+      "MORTIS",
+      "AMBER",
+      "COLT"
+    ],
+    "SPROUT": [
+      "LOU",
+      "PENNY",
+      "COLETTE",
+      "MR. P",
+      "BELLE",
+      "KAZE"
+    ],
+    "SURGE": [
+      "SPIKE",
+      "AMBER",
+      "STU",
+      "EMZ",
+      "HANK"
+    ],
+    "COLT": [
+      "COLETTE",
+      "MORTIS",
+      "PIPER",
+      "EMZ",
+      "EL PRIMO"
+    ],
+    "GIGI": [
+      "MR. P",
+      "RICO",
+      "PEARL"
+    ],
+    "GRAY": [
+      "MR. P",
+      "RICO"
+    ],
+    "SIRIUS": [
+      "AMBER",
+      "MICO",
+      "CHESTER",
+      "SURGE"
+    ],
+    "GRIFF": [
+      "KENJI",
+      "BERRY",
+      "EMZ"
+    ],
+    "KAZE": [
+      "RICO"
+    ],
+    "EMZ": [
+      "KENJI",
+      "DYNAMIKE",
+      "8-BIT",
+      "CHESTER",
+      "EL PRIMO"
+    ],
+    "PIERCE": [
+      "BYRON",
+      "GALE"
+    ],
+    "EDGAR": [
+      "BYRON"
+    ],
+    "SPIKE": [
+      "KENJI",
+      "BERRY",
+      "EMZ"
+    ],
+    "BERRY": [
+      "SURGE",
+      "CHESTER",
+      "EL PRIMO"
+    ],
+    "MINA": [
+      "MORTIS",
+      "MAX",
+      "AMBER"
+    ],
+    "FANG": [
+      "MORTIS",
+      "MAX"
+    ],
+    "BEA": [
+      "AMBER",
+      "COLETTE",
+      "MICO"
+    ],
+    "COLETTE": [
+      "SIRIUS"
+    ],
+    "PEARL": [
+      "MANDY",
+      "SPROUT"
+    ],
+    "HANK": [
+      "PIPER",
+      "OLLIE",
+      "BYRON",
+      "GRAY",
+      "MAX",
+      "DOUG"
+    ],
+    "OTIS": [
+      "AMBER",
+      "PIERCE",
+      "SURGE",
+      "FANG",
+      "TARA"
+    ],
+    "MICO": [
+      "BERRY",
+      "HANK"
+    ],
+    "CORDELIUS": [
+      "LOU",
+      "MAX"
+    ],
+    "BYRON": [
+      "MR. P",
+      "BELLE",
+      "KAZE",
+      "STARR NOVA"
+    ],
+    "BO": [
+      "FANG",
+      "TARA"
+    ],
+    "ASH": [
+      "GRIFF",
+      "SIRIUS"
+    ]
   },
   "synergies": {
-    "BROCK": ["SPIKE", "COLT"],
-    "RICO": ["SPIKE", "SHELLY"],
-    "SHELLY": ["RICO", "BULL"]
+    "EL PRIMO": [
+      "VINCE",
+      "WENDY",
+      "EMZ",
+      "CHESTER"
+    ],
+    "VINCE": [
+      "EL PRIMO",
+      "WENDY",
+      "MR. P",
+      "AMBER",
+      "MINA",
+      "GUS",
+      "STU",
+      "SURGE",
+      "MICO",
+      "CORDELIUS"
+    ],
+    "WENDY": [
+      "EL PRIMO",
+      "VINCE",
+      "BROCK"
+    ],
+    "BROCK": [
+      "EDGAR",
+      "WENDY",
+      "MORTIS",
+      "ALLI",
+      "ANGELO",
+      "MELODIE",
+      "GIGI",
+      "EMZ",
+      "BEA",
+      "SIRIUS",
+      "MANDY"
+    ],
+    "EDGAR": [
+      "BROCK"
+    ],
+    "MR. P": [
+      "VINCE",
+      "CORDELIUS",
+      "COLT",
+      "MORTIS"
+    ],
+    "AMBER": [
+      "RICO",
+      "VINCE",
+      "NAJIA",
+      "SPIKE",
+      "HANK",
+      "BO",
+      "OTIS"
+    ],
+    "RICO": [
+      "AMBER",
+      "NAJIA",
+      "MELODIE",
+      "GALE",
+      "BYRON",
+      "SPROUT",
+      "SQUEAK"
+    ],
+    "GALE": [
+      "LOU",
+      "STU",
+      "RICO",
+      "MORTIS",
+      "SURGE",
+      "GUS",
+      "OTIS",
+      "BYRON"
+    ],
+    "LOU": [
+      "GALE",
+      "STU",
+      "GRIFF",
+      "MELODIE",
+      "CHESTER"
+    ],
+    "STU": [
+      "GALE",
+      "LOU",
+      "GUS",
+      "VINCE",
+      "OTIS"
+    ],
+    "MINA": [
+      "VINCE",
+      "FANG",
+      "NAJIA"
+    ],
+    "GUS": [
+      "VINCE",
+      "STU",
+      "EMZ",
+      "ANGELO",
+      "GALE",
+      "BYRON"
+    ],
+    "MAX": [
+      "MORTIS",
+      "ASH"
+    ],
+    "MORTIS": [
+      "MAX",
+      "BROCK",
+      "COLT",
+      "GALE",
+      "SURGE",
+      "NAJIA",
+      "PEARL",
+      "MR. P"
+    ],
+    "ALLI": [
+      "ANGELO",
+      "BROCK"
+    ],
+    "ANGELO": [
+      "ALLI",
+      "BROCK",
+      "8-BIT",
+      "SQUEAK",
+      "GUS"
+    ],
+    "NAJIA": [
+      "AMBER",
+      "RICO",
+      "FANG",
+      "MINA",
+      "MORTIS",
+      "PEARL",
+      "HANK",
+      "MELODIE"
+    ],
+    "8-BIT": [
+      "MELODIE",
+      "SPROUT",
+      "ANGELO",
+      "SQUEAK",
+      "PIPER"
+    ],
+    "MELODIE": [
+      "8-BIT",
+      "SPROUT",
+      "BROCK",
+      "RICO",
+      "PIPER",
+      "GRIFF",
+      "SPIKE",
+      "LOU",
+      "HANK",
+      "NAJIA"
+    ],
+    "SPROUT": [
+      "8-BIT",
+      "MELODIE",
+      "BYRON",
+      "RICO"
+    ],
+    "SQUEAK": [
+      "8-BIT",
+      "ANGELO",
+      "RICO"
+    ],
+    "SURGE": [
+      "VINCE",
+      "GALE",
+      "MORTIS",
+      "MICO"
+    ],
+    "GIGI": [
+      "BROCK",
+      "GRAY"
+    ],
+    "GRAY": [
+      "GIGI"
+    ],
+    "GRIFF": [
+      "LOU",
+      "MELODIE"
+    ],
+    "PIPER": [
+      "8-BIT",
+      "MELODIE",
+      "MANDY"
+    ],
+    "EMZ": [
+      "BROCK",
+      "GUS",
+      "EL PRIMO",
+      "SIRIUS"
+    ],
+    "COLT": [
+      "MORTIS",
+      "MR. P"
+    ],
+    "SPIKE": [
+      "MELODIE",
+      "AMBER"
+    ],
+    "ASH": [
+      "MAX"
+    ],
+    "FANG": [
+      "MINA",
+      "NAJIA"
+    ],
+    "BEA": [
+      "BROCK",
+      "SIRIUS"
+    ],
+    "SIRIUS": [
+      "BEA",
+      "BROCK",
+      "BERRY",
+      "EMZ"
+    ],
+    "PEARL": [
+      "MORTIS",
+      "NAJIA"
+    ],
+    "MANDY": [
+      "BROCK",
+      "PIPER",
+      "HANK"
+    ],
+    "HANK": [
+      "AMBER",
+      "MANDY",
+      "MELODIE",
+      "NAJIA"
+    ],
+    "OTIS": [
+      "GALE",
+      "STU",
+      "AMBER",
+      "BO"
+    ],
+    "BERRY": [
+      "SIRIUS"
+    ],
+    "CHESTER": [
+      "EL PRIMO",
+      "LOU"
+    ],
+    "MICO": [
+      "SURGE",
+      "VINCE"
+    ],
+    "CORDELIUS": [
+      "MR. P",
+      "VINCE"
+    ],
+    "BYRON": [
+      "RICO",
+      "SPROUT",
+      "GALE",
+      "GUS"
+    ],
+    "BO": [
+      "AMBER",
+      "OTIS"
+    ]
   }
 }
