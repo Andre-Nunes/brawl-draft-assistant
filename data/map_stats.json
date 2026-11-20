@@ -1,0 +1,16 @@
+{
+  "SHOOTING STAR": {
+    "BROCK": 0.62,
+    "SPIKE": 0.54,
+    "COLT": 0.51,
+    "MORTIS": 0.44,
+    "SHELLY": 0.35
+  },
+  "CENTER STAGE": {
+    "RICO": 0.64,
+    "SHELLY": 0.58,
+    "SPIKE": 0.55,
+    "BULL": 0.52,
+    "BROCK": 0.42
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "counters": {
+    "SHELLY": ["BULL", "EL PRIMO", "MORTIS"],
+    "SPIKE": ["BULL", "EL PRIMO", "RICO"],
+    "BROCK": ["SPIKE", "JESSIE"],
+    "RICO": ["SHELLY", "NITA", "COLT"],
+    "MORTIS": ["BROCK", "COLT"]
+  },
+  "synergies": {
+    "BROCK": ["SPIKE", "COLT"],
+    "RICO": ["SPIKE", "SHELLY"],
+    "SHELLY": ["RICO", "BULL"]
+  }
+}
