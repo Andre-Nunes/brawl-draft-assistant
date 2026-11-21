@@ -8,19 +8,27 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-6 font-sans">
   <div class="max-w-5xl mx-auto space-y-5">
+
     <!-- Cabeçalho -->
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
-      <h1 class="text-2xl font-bold tracking-tight text-amber-400">Brawl Draft Assistant</h1>
-      <div class="flex items-center gap-3 text-sm">
+      <div class="flex items-center gap-3">
+        <h1 class="text-2xl font-bold tracking-tight text-amber-400">Brawl Draft Assistant</h1>
+        <span id="mlBadge" class="hidden text-xs px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800 font-medium"></span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5 text-sm">
         <select id="profileSelect" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5">
-          <option value="solo_queue">Perfil: Solo Queue</option>
-          <option value="pro_meta">Perfil: Pro Meta</option>
+          <option value="solo_queue">Solo Queue</option>
+          <option value="pro_meta">Pro Meta</option>
         </select>
-        <label class="flex items-center gap-2 cursor-pointer select-none">
+        <label class="flex items-center gap-2 cursor-pointer select-none bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5">
           <input id="onlyLvl11" type="checkbox" checked class="accent-amber-400 w-4 h-4" />
           <span>Só Nível 11</span>
         </label>
-        <button id="resetBtn" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg">
+        <button id="syncBtn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition">
+          Sincronizar Conta
+        </button>
+        <button id="resetBtn" class="bg-rose-950/60 hover:bg-rose-900/70 text-rose-200 border border-rose-800/70 px-3 py-1.5 rounded-lg transition">
           Limpar Draft
         </button>
       </div>
@@ -30,7 +38,7 @@
     <div class="grid md:grid-cols-2 gap-4">
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
         <label class="text-xs uppercase text-slate-400 font-semibold">Mapa Ranked</label>
-        <select id="mapSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm"></select>
+        <select id="mapSelect" class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 outline-none rounded-lg px-3 py-2 text-sm"></select>
       </div>
 
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2 relative">
@@ -38,14 +46,14 @@
           <span>Adicionar Brawler (Enter)</span>
           <div class="flex gap-1">
             <button data-target="bans" class="target-btn px-2 py-0.5 rounded bg-rose-600 text-white">Ban (Alt+1)</button>
-            <button data-target="my_team" class="target-btn px-2 py-0.5 rounded bg-slate-800">Aliado (Alt+2)</button>
-            <button data-target="enemy_team" class="target-btn px-2 py-0.5 rounded bg-slate-800">Inimigo (Alt+3)</button>
+            <button data-target="my_team" class="target-btn px-2 py-0.5 rounded bg-slate-800 text-slate-300">Aliado (Alt+2)</button>
+            <button data-target="enemy_team" class="target-btn px-2 py-0.5 rounded bg-slate-800 text-slate-300">Inimigo (Alt+3)</button>
           </div>
         </div>
         <input id="brawlerInput" type="text" autocomplete="off"
                placeholder="Escreve o nome (ex: rico, spike) e prime Enter..."
                class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 outline-none rounded-lg px-3 py-2 text-sm" />
-        <div id="suggestions" class="hidden absolute left-4 right-4 top-[88px] bg-slate-900 border border-slate-700 rounded-lg shadow-xl z-20 max-h-48 overflow-y-auto"></div>
+        <div id="suggestions" class="hidden absolute left-4 right-4 top-[88px] bg-slate-900 border border-slate-700 rounded-lg shadow-2xl z-20 max-h-60 overflow-y-auto divide-y divide-slate-800/60"></div>
       </div>
     </div>
 
@@ -53,15 +61,15 @@
     <div class="grid md:grid-cols-3 gap-4">
       <div class="bg-slate-900/70 border border-rose-900/60 rounded-xl p-3">
         <h2 class="text-xs uppercase font-semibold text-rose-400 mb-2">Bans (<span id="bansCount">0</span>/6)</h2>
-        <div id="bansList" class="flex flex-wrap gap-1.5 min-h-[32px]"></div>
+        <div id="bansList" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
       </div>
       <div class="bg-slate-900/70 border border-sky-900/60 rounded-xl p-3">
         <h2 class="text-xs uppercase font-semibold text-sky-400 mb-2">Minha Equipa (<span id="myCount">0</span>/3)</h2>
-        <div id="myTeamList" class="flex flex-wrap gap-1.5 min-h-[32px]"></div>
+        <div id="myTeamList" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
       </div>
       <div class="bg-slate-900/70 border border-amber-900/60 rounded-xl p-3">
         <h2 class="text-xs uppercase font-semibold text-amber-400 mb-2">Equipa Inimiga (<span id="enemyCount">0</span>/3)</h2>
-        <div id="enemyTeamList" class="flex flex-wrap gap-1.5 min-h-[32px]"></div>
+        <div id="enemyTeamList" class="flex flex-wrap gap-1.5 min-h-[36px]"></div>
       </div>
     </div>
 
@@ -69,21 +77,28 @@
     <div id="bansPanel" class="bg-slate-900 border border-rose-900/50 rounded-xl p-4">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-sm uppercase font-semibold text-rose-400">Bans Sugeridos (clica para banir)</h2>
-        <span class="text-xs text-slate-500">Oculta automaticamente ao completar 6 bans</span>
+        <span class="text-xs text-slate-500">Oculta automaticamente ao iniciar os picks</span>
       </div>
-      <div id="banResults" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2"></div>
+      <div id="banResults" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2.5"></div>
     </div>
 
     <!-- Recomendações -->
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
-      <h2 class="text-sm uppercase font-semibold text-slate-300 mb-3">Melhores Picks Recomendados</h2>
-      <div id="results" class="space-y-2"></div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm uppercase font-semibold text-slate-300">Melhores Picks Recomendados</h2>
+        <span class="text-xs text-slate-500">Usa + Aliado / + Inimigo para avançar o draft</span>
+      </div>
+      <div id="results" class="space-y-2.5"></div>
     </div>
   </div>
+
+  <!-- Toast de feedback -->
+  <div id="toast" class="hidden fixed bottom-5 right-5 bg-slate-800 border border-slate-600 text-slate-100 text-sm px-4 py-2.5 rounded-lg shadow-xl z-50"></div>
 
   <script>
     const state = { map_name: "", bans: [], my_team: [], enemy_team: [], profile: "solo_queue", only_level_11: true };
     let allBrawlers = [];
+    let brawlerIds = {};
     let activeTarget = "bans";
     let currentMatches = [];
 
@@ -96,6 +111,9 @@
       results: document.getElementById("results"),
       banPanel: document.getElementById("bansPanel"),
       banResults: document.getElementById("banResults"),
+      mlBadge: document.getElementById("mlBadge"),
+      syncBtn: document.getElementById("syncBtn"),
+      toast: document.getElementById("toast"),
     };
 
     const targetColors = {
@@ -103,6 +121,28 @@
       my_team: "bg-sky-600 text-white",
       enemy_team: "bg-amber-600 text-white",
     };
+
+    const riskStyles = {
+      "Baixo": "bg-emerald-950 text-emerald-300 border-emerald-800",
+      "Médio": "bg-amber-950 text-amber-300 border-amber-800",
+      "Alto":  "bg-rose-950 text-rose-300 border-rose-800",
+    };
+
+    function showToast(msg) {
+      els.toast.textContent = msg;
+      els.toast.classList.remove("hidden");
+      setTimeout(() => els.toast.classList.add("hidden"), 3000);
+    }
+
+    function avatarHtml(name, sizeClass = "w-8 h-8") {
+      const id = brawlerIds[name];
+      if (!id) {
+        return `<span class="${sizeClass} rounded-md bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">${name[0]}</span>`;
+      }
+      const url = `https://cdn.brawlify.com/brawlers/borderless/${id}.png`;
+      return `<img src="${url}" alt="${name}" loading="lazy" onerror="this.style.display='none'"
+                   class="${sizeClass} rounded-md object-cover bg-slate-800/80 border border-slate-700/70 shrink-0" />`;
+    }
 
     function setTarget(target) {
       activeTarget = target;
@@ -113,13 +153,13 @@
       els.input.focus();
     }
 
-    function addBrawler(name) {
+    function addBrawler(name, target = activeTarget) {
       const upper = name.toUpperCase();
       const used = new Set([...state.bans, ...state.my_team, ...state.enemy_team]);
       const limits = { bans: 6, my_team: 3, enemy_team: 3 };
-      if (!allBrawlers.includes(upper) || used.has(upper) || state[activeTarget].length >= limits[activeTarget]) return;
+      if (!allBrawlers.includes(upper) || used.has(upper) || state[target].length >= limits[target]) return;
 
-      state[activeTarget].push(upper);
+      state[target].push(upper);
       els.input.value = "";
       els.sugg.classList.add("hidden");
       renderChips();
@@ -134,24 +174,19 @@
 
     function renderChips() {
       const configs = [
-        ["bans", "bansList", "bansCount", "bg-rose-950 text-rose-200 border-rose-700"],
-        ["my_team", "myTeamList", "myCount", "bg-sky-950 text-sky-200 border-sky-700"],
-        ["enemy_team", "enemyTeamList", "enemyCount", "bg-amber-950 text-amber-200 border-amber-700"],
+        ["bans", "bansList", "bansCount", "bg-rose-950/90 text-rose-200 border-rose-700/80"],
+        ["my_team", "myTeamList", "myCount", "bg-sky-950/90 text-sky-200 border-sky-700/80"],
+        ["enemy_team", "enemyTeamList", "enemyCount", "bg-amber-950/90 text-amber-200 border-amber-700/80"],
       ];
       configs.forEach(([key, listId, countId, cls]) => {
         document.getElementById(countId).textContent = state[key].length;
         document.getElementById(listId).innerHTML = state[key]
-          .map(b => `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${cls}">
-            ${b} <button onclick="removeBrawler('${key}', '${b}')" class="hover:text-white">×</button>
+          .map(b => `<span class="inline-flex items-center gap-1.5 pl-1 pr-2 py-0.5 rounded-lg text-xs font-medium border ${cls}">
+            ${avatarHtml(b, "w-5 h-5")}
+            <span>${b}</span>
+            <button onclick="removeBrawler('${key}', '${b}')" class="hover:text-white ml-0.5 font-bold">×</button>
           </span>`).join("");
       });
-    }
-
-    function quickBan(name) {
-      if (state.bans.length >= 6 || state.bans.includes(name)) return;
-      state.bans.push(name);
-      renderChips();
-      fetchRecommendations();
     }
 
     async function fetchBans() {
@@ -166,13 +201,16 @@
       });
       const bans = await res.json();
       els.banResults.innerHTML = bans.map(b => `
-        <button onclick="quickBan('${b.brawler}')"
-                class="text-left bg-slate-950 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-700 rounded-lg p-2.5 transition">
-          <div class="flex items-center justify-between gap-1">
-            <span class="font-bold text-sm text-slate-100 truncate">${b.brawler}</span>
-            <span class="text-xs font-semibold text-rose-400">${b.score}%</span>
+        <button onclick="addBrawler('${b.brawler}', 'bans')"
+                class="text-left bg-slate-950 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-700 rounded-lg p-2.5 transition group">
+          <div class="flex items-center gap-2">
+            ${avatarHtml(b.brawler, "w-9 h-9")}
+            <div class="min-w-0 flex-1">
+              <div class="font-bold text-xs text-slate-100 truncate group-hover:text-rose-200">${b.brawler}</div>
+              <div class="text-xs font-semibold text-rose-400">${b.score}% · Tier ${b.tier}</div>
+            </div>
           </div>
-          <div class="text-[11px] text-slate-400 mt-1 line-clamp-2">${b.reasons.join(" · ")}</div>
+          <div class="text-[11px] text-slate-400 mt-1.5 line-clamp-2">${b.reasons.join(" · ")}</div>
         </button>
       `).join("");
     }
@@ -180,32 +218,45 @@
     async function fetchRecommendations() {
       fetchBans();
       if (!state.map_name) return;
+
       const res = await fetch("/api/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(state),
       });
-      const riskStyles = {
-        "Baixo": "bg-emerald-950 text-emerald-300 border-emerald-800",
-        "Médio": "bg-amber-950 text-amber-300 border-amber-800",
-        "Alto":  "bg-rose-950 text-rose-300 border-rose-800",
-      };
       const recs = await res.json();
       els.results.innerHTML = recs.map((r, i) => `
-        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-950 border border-slate-800 rounded-lg px-4 py-3">
-          <div class="flex items-center gap-3">
-            <span class="text-lg font-bold text-slate-500 w-6">#${i + 1}</span>
-            <div>
-              <div class="font-bold text-base flex items-center gap-2">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-xl px-4 py-3 transition">
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <span class="text-base font-bold text-slate-500 w-6 shrink-0">#${i + 1}</span>
+            ${avatarHtml(r.brawler, "w-11 h-11")}
+            <div class="min-w-0 flex-1">
+              <div class="font-bold text-base flex flex-wrap items-center gap-2">
                 <span>${r.brawler}</span>
                 <span class="text-xs px-1.5 py-0.5 rounded bg-slate-800 text-amber-300">Tier ${r.tier}</span>
                 <span class="text-xs px-1.5 py-0.5 rounded border ${riskStyles[r.risk] || ''}">Risco ${r.risk}</span>
               </div>
-              <div class="text-xs text-slate-400">${r.reasons.join(" · ")}</div>
+              <div class="text-xs text-slate-400 mt-0.5 truncate">${r.reasons.join(" · ")}</div>
             </div>
           </div>
-          <div class="text-right">
-            <div class="text-lg font-bold text-emerald-400">${r.score}%</div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="w-24 hidden sm:block">
+              <div class="text-right text-sm font-bold text-emerald-400">${r.score}%</div>
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mt-1">
+                <div class="h-full bg-emerald-400 rounded-full" style="width: ${Math.min(100, r.score)}%"></div>
+              </div>
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="addBrawler('${r.brawler}', 'my_team')"
+                      class="text-xs px-2.5 py-1.5 rounded-lg bg-sky-950 hover:bg-sky-800 text-sky-200 border border-sky-800/80 transition">
+                + Aliado
+              </button>
+              <button onclick="addBrawler('${r.brawler}', 'enemy_team')"
+                      class="text-xs px-2.5 py-1.5 rounded-lg bg-amber-950 hover:bg-amber-800 text-amber-200 border border-amber-800/80 transition">
+                + Inimigo
+              </button>
+            </div>
           </div>
         </div>
       `).join("") || `<p class="text-sm text-slate-500">Sem recomendações disponíveis.</p>`;
@@ -220,7 +271,10 @@
         return;
       }
       els.sugg.innerHTML = currentMatches.map(b =>
-        `<div class="px-3 py-2 text-sm hover:bg-slate-800 cursor-pointer" onclick="addBrawler('${b}')">${b}</div>`
+        `<div class="flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-slate-800 cursor-pointer" onclick="addBrawler('${b}')">
+          ${avatarHtml(b, "w-6 h-6")}
+          <span>${b}</span>
+        </div>`
       ).join("");
       els.sugg.classList.remove("hidden");
     });
@@ -229,6 +283,9 @@
       if (e.key === "Enter" && currentMatches.length) {
         e.preventDefault();
         addBrawler(currentMatches[0]);
+      } else if (e.key === "Escape") {
+        els.input.value = "";
+        els.sugg.classList.add("hidden");
       }
     });
 
@@ -245,17 +302,49 @@
     els.map.addEventListener("change", () => { state.map_name = els.map.value; fetchRecommendations(); });
     els.profile.addEventListener("change", () => { state.profile = els.profile.value; fetchRecommendations(); });
     els.lvl11.addEventListener("change", () => { state.only_level_11 = els.lvl11.checked; fetchRecommendations(); });
+
     document.getElementById("resetBtn").addEventListener("click", () => {
       state.bans = []; state.my_team = []; state.enemy_team = [];
       renderChips(); fetchRecommendations(); els.input.focus();
     });
 
-    async function init() {
+    els.syncBtn.addEventListener("click", async () => {
+      els.syncBtn.disabled = true;
+      els.syncBtn.textContent = "A sincronizar...";
+      try {
+        const res = await fetch("/api/sync-account", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Erro ao sincronizar");
+        await loadMeta(false);
+        fetchRecommendations();
+        showToast(`Conta atualizada: ${data.ready}/${data.total} brawlers a Nível 11.`);
+      } catch (err) {
+        showToast(`Erro no sync: ${err.message}`);
+      } finally {
+        els.syncBtn.disabled = false;
+        els.syncBtn.textContent = "Sincronizar Conta";
+      }
+    });
+
+    async function loadMeta(resetMap = true) {
       const res = await fetch("/api/meta");
       const meta = await res.json();
       allBrawlers = meta.brawlers;
-      els.map.innerHTML = meta.maps.map(m => `<option value="${m}">${m}</option>`).join("");
-      state.map_name = meta.maps[0] || "";
+      brawlerIds = meta.brawler_ids || {};
+
+      if (meta.ml_active) {
+        els.mlBadge.textContent = `PyTorch ML · AUC ${meta.ml_auc}`;
+        els.mlBadge.classList.remove("hidden");
+      }
+
+      if (resetMap) {
+        els.map.innerHTML = meta.maps.map(m => `<option value="${m}">${m}</option>`).join("");
+        state.map_name = meta.maps[0] || "";
+      }
+    }
+
+    async function init() {
+      await loadMeta(true);
       renderChips();
       fetchRecommendations();
       els.input.focus();
