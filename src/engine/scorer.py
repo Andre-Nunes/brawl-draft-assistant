@@ -20,6 +20,10 @@ class DraftScorer:
         )
         matchups = json.loads((data_dir / "matchups.json").read_text(encoding="utf-8"))
         self.counters: dict[str, list[str]] = matchups.get("counters", {})
+        self.countered_by: dict[str, list[str]] = {}
+        for attacker, targets in self.counters.items():
+            for target in targets:
+                self.countered_by.setdefault(target, []).append(attacker)
         self.synergies: dict[str, list[str]] = matchups.get("synergies", {})
 
     @staticmethod
@@ -54,6 +58,52 @@ class DraftScorer:
         reasons = [f"Sinergia com {', '.join(hits)}"] if hits else []
         return score, reasons
 
+    def _calc_early_pick_risk(
+        self,
+        brawler: str,
+        unavailable: set[str],
+        map_data: dict[str, float],
+        enemy_count: int,
+    ) -> tuple[float, str, list[str]]:
+        remaining_enemy_picks = max(0, 3 - enemy_count)
+        if remaining_enemy_picks == 0:
+            return 0.0, "Baixo", []
+
+        exposure = remaining_enemy_picks / 3.0
+        potential_counters = self.countered_by.get(brawler, [])
+
+        # Só conta counters livres que sejam realmente jogáveis neste mapa ou meta (Tier S/A)
+        viable_open = [
+            c for c in potential_counters
+            if c not in unavailable
+            and (
+                map_data.get(c, 0.0) >= 0.48
+                or self.tier_list.tiers.get(c) in ("S", "A")
+            )
+        ]
+        # Ordena os counters abertos pelos mais fortes no mapa
+        viable_open.sort(key=lambda c: map_data.get(c, 0.50), reverse=True)
+
+        count = len(viable_open)
+        if count == 0 and remaining_enemy_picks >= 2:
+            return -0.03, "Baixo", ["First pick seguro"]  # Pequeno bónus (-penalização)
+
+        penalty = min(0.16, count * 0.03) * exposure
+
+        if penalty >= 0.08:
+            risk = "Alto"
+            top_threats = ", ".join(viable_open[:3])
+            reasons = [f"Risco alto de counter aberto ({top_threats})"]
+        elif penalty >= 0.04:
+            risk = "Médio"
+            top_threats = ", ".join(viable_open[:2])
+            reasons = [f"Vulnerável a {top_threats}"]
+        else:
+            risk = "Baixo"
+            reasons = []
+
+        return penalty, risk, reasons
+
     def recommend(self, state: DraftState, top_n: int = 5) -> list[Recommendation]:
         map_key = state.map_name.upper()
         map_data = self.map_stats.get(map_key, {})
@@ -84,12 +134,19 @@ class DraftScorer:
             counter_score, counter_reasons = self._calc_counter_score(b.name, enemies)
             synergy_score, synergy_reasons = self._calc_synergy_score(b.name, allies)
 
+            # 4. Risco de First/Early Pick
+            risk_penalty, risk_label, risk_reasons = self._calc_early_pick_risk(
+                b.name, unavailable, map_data, len(enemies)
+            )
+
             final_score = (
                 weights["map"] * map_score
                 + weights["counter"] * counter_score
                 + weights["synergy"] * synergy_score
                 + weights["tier"] * tier_score
+                - risk_penalty
             )
+            final_score = max(0.0, min(1.0, final_score))
 
             reasons = []
             if map_score >= 0.58:
@@ -98,12 +155,14 @@ class DraftScorer:
                 reasons.append(f"Pro Tier {tier_label}")
             reasons.extend(counter_reasons)
             reasons.extend(synergy_reasons)
+            reasons.extend(risk_reasons)
 
             results.append(
                 Recommendation(
                     brawler=b.name,
                     score=round(final_score * 100, 1),
                     tier=tier_label,
+                    risk=risk_label,
                     reasons=reasons or ["Pick equilibrado"],
                 )
             )

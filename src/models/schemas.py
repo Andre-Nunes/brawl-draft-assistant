@@ -34,4 +34,5 @@ class Recommendation(BaseModel):
     brawler: str
     score: float
     tier: str
+    risk: Literal["Baixo", "Médio", "Alto"] = "Baixo"
     reasons: list[str]

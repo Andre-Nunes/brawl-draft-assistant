@@ -143,6 +143,11 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(state),
       });
+      const riskStyles = {
+        "Baixo": "bg-emerald-950 text-emerald-300 border-emerald-800",
+        "Médio": "bg-amber-950 text-amber-300 border-amber-800",
+        "Alto":  "bg-rose-950 text-rose-300 border-rose-800",
+      };
       const recs = await res.json();
       els.results.innerHTML = recs.map((r, i) => `
         <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-950 border border-slate-800 rounded-lg px-4 py-3">
@@ -152,6 +157,7 @@
               <div class="font-bold text-base flex items-center gap-2">
                 <span>${r.brawler}</span>
                 <span class="text-xs px-1.5 py-0.5 rounded bg-slate-800 text-amber-300">Tier ${r.tier}</span>
+                <span class="text-xs px-1.5 py-0.5 rounded border ${riskStyles[r.risk] || ''}">Risco ${r.risk}</span>
               </div>
               <div class="text-xs text-slate-400">${r.reasons.join(" · ")}</div>
             </div>
