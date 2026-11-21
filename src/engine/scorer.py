@@ -1,7 +1,13 @@
 import json
 from pathlib import Path
 
-from src.models.schemas import DraftState, PlayerBrawler, Recommendation, TierList
+from src.models.schemas import (
+    BanRecommendation,
+    DraftState,
+    PlayerBrawler,
+    Recommendation,
+    TierList,
+)
 
 WEIGHT_PROFILES = {
     "solo_queue": {"map": 0.40, "counter": 0.30, "synergy": 0.15, "tier": 0.15},
@@ -12,6 +18,9 @@ WEIGHT_PROFILES = {
 class DraftScorer:
     def __init__(self, data_dir: Path = Path("data")) -> None:
         self.my_brawlers = self._load_my_brawlers(data_dir / "raw/my_brawlers.json")
+        self.ready_brawlers: set[str] = {
+            b.name for b in self.my_brawlers if b.is_ranked_ready
+        }
         self.tier_list = TierList.model_validate_json(
             (data_dir / "tier_list.json").read_text(encoding="utf-8")
         )
@@ -103,6 +112,76 @@ class DraftScorer:
             reasons = []
 
         return penalty, risk, reasons
+
+    def recommend_bans(self, state: DraftState, top_n: int = 5) -> list[BanRecommendation]:
+        map_key = state.map_name.upper()
+        map_data = self.map_stats.get(map_key, {})
+        unavailable = {
+            b.upper() for b in (state.bans + state.my_team + state.enemy_team)
+        }
+
+        # Conjunto de candidatos: brawlers com dados no mapa ou Tier S/A
+        candidates = set(map_data.keys()) | {
+            b for b, t in self.tier_list.tiers.items() if t in ("S", "A")
+        }
+
+        # Brawlers relevantes neste mapa que queremos proteger de counters
+        map_meta_pool = {b for b, wr in map_data.items() if wr >= 0.50}
+
+        ban_weights = (
+            {"map": 0.50, "tier": 0.25, "threat": 0.25}
+            if state.profile == "solo_queue"
+            else {"map": 0.35, "tier": 0.40, "threat": 0.25}
+        )
+
+        results: list[BanRecommendation] = []
+        for brawler in candidates:
+            if brawler in unavailable:
+                continue
+
+            map_score = map_data.get(brawler, 0.50)
+            tier_label = self.tier_list.tiers.get(brawler, "B")
+            tier_score = self.tier_list.weights.get(tier_label, 0.50)
+
+            # Ameaça: quantos brawlers fortes no mapa este brawler countera
+            countered_on_map = [
+                t for t in self.counters.get(brawler, []) if t in map_meta_pool
+            ]
+            threat_score = min(1.0, 0.45 + 0.08 * len(countered_on_map))
+
+            owned_lvl11 = brawler in self.ready_brawlers
+            unowned_bonus = 0.04 if not owned_lvl11 else 0.0
+
+            final_score = (
+                ban_weights["map"] * map_score
+                + ban_weights["tier"] * tier_score
+                + ban_weights["threat"] * threat_score
+                + unowned_bonus
+            )
+            final_score = max(0.0, min(1.0, final_score))
+
+            reasons = []
+            if map_score >= 0.55:
+                reasons.append(f"Dominante no mapa ({map_score:.0%})")
+            if tier_label in ("S", "A"):
+                reasons.append(f"Pro Tier {tier_label}")
+            if len(countered_on_map) >= 3:
+                reasons.append(f"Counter a {len(countered_on_map)} picks fortes aqui")
+            if not owned_lvl11:
+                reasons.append("Não tens a Nível 11")
+
+            results.append(
+                BanRecommendation(
+                    brawler=brawler,
+                    score=round(final_score * 100, 1),
+                    tier=tier_label,
+                    owned_lvl11=owned_lvl11,
+                    reasons=reasons or ["Ameaça geral no mapa"],
+                )
+            )
+
+        results.sort(key=lambda r: r.score, reverse=True)
+        return results[:top_n]
 
     def recommend(self, state: DraftState, top_n: int = 5) -> list[Recommendation]:
         map_key = state.map_name.upper()

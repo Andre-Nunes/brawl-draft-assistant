@@ -65,6 +65,15 @@
       </div>
     </div>
 
+    <!-- Bans Sugeridos -->
+    <div id="bansPanel" class="bg-slate-900 border border-rose-900/50 rounded-xl p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm uppercase font-semibold text-rose-400">Bans Sugeridos (clica para banir)</h2>
+        <span class="text-xs text-slate-500">Oculta automaticamente ao completar 6 bans</span>
+      </div>
+      <div id="banResults" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2"></div>
+    </div>
+
     <!-- Recomendações -->
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
       <h2 class="text-sm uppercase font-semibold text-slate-300 mb-3">Melhores Picks Recomendados</h2>
@@ -85,6 +94,8 @@
       input: document.getElementById("brawlerInput"),
       sugg: document.getElementById("suggestions"),
       results: document.getElementById("results"),
+      banPanel: document.getElementById("bansPanel"),
+      banResults: document.getElementById("banResults"),
     };
 
     const targetColors = {
@@ -136,7 +147,38 @@
       });
     }
 
+    function quickBan(name) {
+      if (state.bans.length >= 6 || state.bans.includes(name)) return;
+      state.bans.push(name);
+      renderChips();
+      fetchRecommendations();
+    }
+
+    async function fetchBans() {
+      const showBans = state.bans.length < 6 && state.my_team.length === 0 && state.enemy_team.length === 0;
+      els.banPanel.classList.toggle("hidden", !showBans);
+      if (!showBans || !state.map_name) return;
+
+      const res = await fetch("/api/bans", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      });
+      const bans = await res.json();
+      els.banResults.innerHTML = bans.map(b => `
+        <button onclick="quickBan('${b.brawler}')"
+                class="text-left bg-slate-950 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-700 rounded-lg p-2.5 transition">
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-bold text-sm text-slate-100 truncate">${b.brawler}</span>
+            <span class="text-xs font-semibold text-rose-400">${b.score}%</span>
+          </div>
+          <div class="text-[11px] text-slate-400 mt-1 line-clamp-2">${b.reasons.join(" · ")}</div>
+        </button>
+      `).join("");
+    }
+
     async function fetchRecommendations() {
+      fetchBans();
       if (!state.map_name) return;
       const res = await fetch("/api/recommend", {
         method: "POST",

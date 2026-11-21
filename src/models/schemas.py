@@ -36,3 +36,10 @@ class Recommendation(BaseModel):
     tier: str
     risk: Literal["Baixo", "Médio", "Alto"] = "Baixo"
     reasons: list[str]
+
+class BanRecommendation(BaseModel):
+    brawler: str
+    score: float
+    tier: str
+    owned_lvl11: bool
+    reasons: list[str]

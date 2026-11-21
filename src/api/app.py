@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
 from src.engine.scorer import DraftScorer
-from src.models.schemas import DraftState, Recommendation
+from src.models.schemas import BanRecommendation, DraftState, Recommendation
 
 app = FastAPI(title="Brawl Draft Assistant")
 STATIC_DIR = Path("static")
@@ -34,6 +34,9 @@ def get_meta() -> dict[str, list[str]]:
 def recommend_picks(state: DraftState) -> list[Recommendation]:
     return scorer.recommend(state, top_n=8)
 
+@app.post("/api/bans", response_model=list[BanRecommendation])
+def recommend_bans(state: DraftState) -> list[BanRecommendation]:
+    return scorer.recommend_bans(state, top_n=5)
 
 @app.post("/api/reload")
 def reload_data() -> dict[str, str]:
